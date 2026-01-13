@@ -82,6 +82,44 @@ app.post("/signUp",async (req,res)=>{
     }
 })
 
+app.post("/login",async (req,res)=>{
+    const {email,password}=req.body;
+
+    if(!email){
+        return res.json({
+            success:false,
+            message:"email is required",
+            data:null,
+        })
+    }
+
+            if(!password){
+        return  res.json({
+            success:false,
+            message:"password is required",
+            data:null,
+        })
+    }
+
+     const existingUser=await User.findOne({email ,password}).select("-password");
+
+     if(existingUser){
+                return res.json({
+            success:true,
+            message:"login successfully",
+            data:existingUser
+        })
+     }else{
+        return res.json({
+            success:false,
+            message:"invalid username and password",
+            data:null,
+        })
+     }
+
+})
+
+
 
 app.listen(PORT,()=>{
     console.log(`server is running on port ${PORT}`);
