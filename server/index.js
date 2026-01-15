@@ -3,7 +3,8 @@ import express from "express";
 import cors from "cors"; 
 import connectDB from "./db.js";
 import User from "./models/user.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 
 dotenv.config();
 
@@ -56,8 +57,6 @@ const ShamSociaty=(req,res)=>{
     })
 }
 
-
-
 app.post("/ModakSociaty",gatekepper,areYouDrunk,ModakSociaty);
 
 app.post("/ShamSociaty",gatekepper,ShamSociaty);
@@ -69,11 +68,42 @@ app.get("/",(req,res)=>{
     })
 }) 
 
-
-
 app.get("/Health",(req,res)=>{
     res.json({Status:"OK"})
 })
+
+const checkJWT=(req,res,next)=>{
+    const {authorization}=req.headers;
+    const token=authorization && authorization.split(" ")[1];
+    console.log("Token",token);
+
+    try{
+    const decodedToken=jwt.verify(token,process.env.JWT_SECRET);
+    next();
+    }catch(e){
+        return res.json({
+            success:false,
+            message:"invalid or missing token",
+            data:null
+        })
+    }
+}
+
+
+app.get("/apiv1",checkJWT,(req,res)=>{
+
+    return res.json({
+        message:"API v1 is working"
+    })
+})
+
+app.get("/apiv2",(req,res)=>{
+
+    return res.json({
+        message:"API v2 is working"
+    })
+})
+
 
 app.post("/signUp",async (req,res)=>{
     const {name,email,mobile,city,country,password}=req.body;
@@ -172,9 +202,21 @@ app.post("/login",async (req,res)=>{
      existingUser.password=undefined;
 
      if(isPasswordCorrect){
-                return res.json({
+     const jwttoken = jwt.sign(
+       {
+         id: existingUser._id,
+         email: existingUser.email,
+       },
+       process.env.JWT_SECRET,
+       {
+         expiresIn: "1h",
+       }
+     );
+     
+            return res.json({
             success:true,
             message:"login successfully",
+            token: jwttoken,
             data:existingUser
         })
      }else{
