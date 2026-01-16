@@ -35,7 +35,7 @@ const TourSchema=new Schema({
     type:Date,
     }
 
-})
+},{timestamps:true})
 
 const Tour=model("Tour",TourSchema);
 

@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import dotenv from "dotenv";
+import {JWT_EXPIRATION} from "../configs.js"
 
 dotenv.config();
 
@@ -113,7 +114,7 @@ const postLogin=async (req,res)=>{
        },
        process.env.JWT_SECRET,
        {
-         expiresIn: "1h",
+         expiresIn:JWT_EXPIRATION,
        }
      );
      

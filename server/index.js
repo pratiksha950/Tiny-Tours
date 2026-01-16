@@ -12,7 +12,7 @@ import {getHome,getHealth} from "./controllers/health.js"
 //auth/js
 import {postSignUp,postLogin} from "./controllers/auth.js"
 //tour.js
-import {getTours,postTour} from "./controllers/tours.js"
+import {getTours,postTour,putTours} from "./controllers/tours.js"
 
 //Middleware
 import {checkJWT} from "./middlewares/jwt.js"
@@ -71,8 +71,8 @@ const PORT=process.env.PORT || 8080;
 // app.post("/ShamSociaty",gatekepper,ShamSociaty);
 
 
+//health Routes
 app.get("/",getHome) 
-
 app.get("/Health",getHealth)
 
 
@@ -91,13 +91,13 @@ app.get("/Health",getHealth)
 //     })
 // })
 
-
+//auth Routes
 app.post("/signUp",postSignUp);
+app.post("/login",postLogin);
+app.put("/tours/:id",checkJWT,putTours)
 
-app.post("/login",postLogin)
-
+//Tour   Routes
 app.post("/tours",checkJWT,getTours)
-
 app.get("/tours",checkJWT,postTour)
 
 

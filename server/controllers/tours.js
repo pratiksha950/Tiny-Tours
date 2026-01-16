@@ -43,5 +43,47 @@ const postTour=async(req,res)=>{
         })
 
 }
+
+const putTours=async(req,res)=>{
+
+    const user=req.user;
+    const userId=user.id;
+    const {id}=req.params;
+
+    const tour=await Tour.findById(id);
+
+    if(!tour){
+        return res.status(404).json({
+            success:false,
+            message:"Tour not found",
+            data:null
+        })
+    }
+
+    if(tour.user.toString()!==userId){
+        return res.json({
+            success:false,
+            message:`Unautherized to update this tour`,
+            data:null
+        })
+
+
+    }
+
+            const {title,Description,cities,StartDate,EndDate,Photos}=
+    req.body;
+
+   await Tour.updateOne(
+        {_id:id},
+        {title,Description,cities,StartDate,EndDate,Photos}
+    )
+
+     const updatedTour=await Tour.findById(id);
+        return res.json({
+        success:true,
+        message:` tours updated succesfully`,
+        data:updatedTour
+        })  
+}
     
-export {getTours,postTour}
+export {getTours,postTour,putTours}
