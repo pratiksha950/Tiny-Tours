@@ -1,6 +1,11 @@
-import React from 'react'
+import {useEffect} from "react"
+
 
 function Login() {
+    useEffect(()=>{
+        document.title="Login-TinyTour"
+    },[])
+
   return (
     <div>Login</div>
   )
