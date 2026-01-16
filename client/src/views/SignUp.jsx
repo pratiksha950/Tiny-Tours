@@ -3,6 +3,8 @@ import {setPageTitle} from "../utils.jsx"
 import { useState } from "react"
 import Input from "../components/Input.jsx"
 import Button from "../components/Button.jsx"
+import axios from "axios"
+import toast,{Toaster} from "react-hot-toast"
 
 
 function SignUp() {
@@ -18,6 +20,29 @@ function SignUp() {
     useEffect(()=>{
         setPageTitle("SignUp-TinyTour")
     },[])
+
+    const createUser=async()=>{
+        const response=await axios.post("http://localhost:8080/signUp",newUser);
+        console.log(response.data);
+        if(response.data.success){
+            toast.success(response.data.message,{id:"signupSuccess"})
+            setNewUser({
+              name:"",
+              email:"",
+              mobile:"",
+              city:"",
+              country:"",
+              password:""
+            })
+
+            setTimeout(()=>{
+                window.location.href="/login"
+            },1500)
+        }else{
+            toast.error(response.data.message,{id:"signuperror"})
+        }
+        
+    }
 
   return (
     <div className="w-60 flex flex-col justify-center items-center m-auto gap-4 ">SignUp
@@ -63,8 +88,8 @@ function SignUp() {
         onChange={(e)=>{setNewUser({...newUser,password:e.target.value})}}
         />
 
-        <Button title="signUp"/>
-       
+        <Button title="signUp" onClick={createUser}/>
+       <Toaster/>
     </div>
   )
 }
