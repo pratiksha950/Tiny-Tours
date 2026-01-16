@@ -14,52 +14,52 @@ app.use(cors());
 
 const PORT=process.env.PORT || 8080;
 
-const gatekepper=(req,res,next)=>{
-     const {name,isSociatyMember}=req.body;
-     console.log(`hellow ${name}`);
+// const gatekepper=(req,res,next)=>{
+//      const {name,isSociatyMember}=req.body;
+//      console.log(`hellow ${name}`);
 
-     if(isSociatyMember){
-        next();
-     }else{
-        return res.json({
-            message:"access denied you must be society member"
-        })
-     } 
-}
+//      if(isSociatyMember){
+//         next();
+//      }else{
+//         return res.json({
+//             message:"access denied you must be society member"
+//         })
+//      } 
+// }
 
-const areYouDrunk=(req,res,next)=>{
-    const {areYouDrunk}=req.body;
+// const areYouDrunk=(req,res,next)=>{
+//     const {areYouDrunk}=req.body;
 
-    if(areYouDrunk){
-        return res.json({message:"entry denied for Drunk"})
-    }else{
-        next();
-    }
-}
+//     if(areYouDrunk){
+//         return res.json({message:"entry denied for Drunk"})
+//     }else{
+//         next();
+//     }
+// }
 
-const ModakSociaty=(req,res)=>{
-    console.log("Inside  Modaksociaty");
-    const random=Math.round(Math.random()*100);
+// const ModakSociaty=(req,res)=>{
+//     console.log("Inside  Modaksociaty");
+//     const random=Math.round(Math.random()*100);
 
-    return res.json({
-        message:"thank you for visiting  Modaksociaty",
-        random
-    })
-}
+//     return res.json({
+//         message:"thank you for visiting  Modaksociaty",
+//         random
+//     })
+// }
 
-const ShamSociaty=(req,res)=>{
-    console.log("Inside Sham sociaty");
-    const random=Math.round(Math.random()*100);
+// const ShamSociaty=(req,res)=>{
+//     console.log("Inside Sham sociaty");
+//     const random=Math.round(Math.random()*100);
 
-    return res.json({
-        message:"thank you for visiting sham sociaty",
-        random
-    })
-}
+//     return res.json({
+//         message:"thank you for visiting sham sociaty",
+//         random
+//     })
+// }
 
-app.post("/ModakSociaty",gatekepper,areYouDrunk,ModakSociaty);
+// app.post("/ModakSociaty",gatekepper,areYouDrunk,ModakSociaty);
 
-app.post("/ShamSociaty",gatekepper,ShamSociaty);
+// app.post("/ShamSociaty",gatekepper,ShamSociaty);
 
 
 app.get("/",(req,res)=>{
@@ -90,19 +90,19 @@ const checkJWT=(req,res,next)=>{
 }
 
 
-app.get("/apiv1",checkJWT,(req,res)=>{
+// app.get("/apiv1",checkJWT,(req,res)=>{
 
-    return res.json({
-        message:"API v1 is working"
-    })
-})
+//     return res.json({
+//         message:"API v1 is working"
+//     })
+// })
 
-app.get("/apiv2",(req,res)=>{
+// app.get("/apiv2",(req,res)=>{
 
-    return res.json({
-        message:"API v2 is working"
-    })
-})
+//     return res.json({
+//         message:"API v2 is working"
+//     })
+// })
 
 
 app.post("/signUp",async (req,res)=>{
