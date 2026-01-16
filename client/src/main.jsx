@@ -1,24 +1,23 @@
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import {BrowserRouter,Route,Routes} from "react-router"
-import Home from './views/Home';
-import Login from './views/Login';
-import SignUp from './views/SignUp';
-import Tours from './views/Tours';
-import NewTour from './views/NewTour';
-import EditTour from './views/EditTour';
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./index.css";
 
-const root =createRoot(document.getElementById('root'));
-root.render(
+import Home from "./views/Home";
+import Login from "./views/Login";
+import SignUp from "./views/SignUp";
+import Tours from "./views/Tours";
+import NewTour from "./views/NewTour";
+import EditTour from "./views/EditTour";
+
+createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/login" element={<Login />}></Route>
-      <Route path="/signup" element={<SignUp />}></Route>
-      <Route path="/tours" element={<Tours />}></Route>
-      <Route path="/newtour" element={<NewTour />}></Route>
-      <Route path="/editTour" element={<EditTour />}></Route>
-      
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/tours" element={<Tours />} />
+      <Route path="/newtour" element={<NewTour />} />
+      <Route path="/editTour" element={<EditTour />} />
     </Routes>
   </BrowserRouter>
-)
+);
