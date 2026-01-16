@@ -1,9 +1,11 @@
 import {useEffect} from "react"
+import {setPageTitle} from "../utils.jsx"
+
 
 
 function NewTour() {
     useEffect(()=>{
-        document.title="NewTour-TinyTour"
+        setPageTitle("NewTour-TinyTour")
     },[])
 
   return (
