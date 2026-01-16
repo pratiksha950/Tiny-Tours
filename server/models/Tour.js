@@ -11,10 +11,7 @@ const TourSchema=new Schema({
     },
     cities:{
         type:[String],
-        Default:[],
-    },
-    duration:{
-        type:Number,
+        default:[],
     },
     Photos:{
         type:[
@@ -27,12 +24,19 @@ const TourSchema=new Schema({
         default:[]
     },
     user:{
-        type:Schema>Types>ObjectId,
+        type:Schema.Types.ObjectId, 
         ref:"User",
         required:true
+    },
+        StartDate:{
+        type:Date,
+    },
+    EndDate:{
+    type:Date,
     }
+
 })
 
-const User=model("Tour",TourSchema);
+const Tour=model("Tour",TourSchema);
 
 export default Tour

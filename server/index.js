@@ -4,7 +4,8 @@ import cors from "cors";
 import connectDB from "./db.js";
 import User from "./models/user.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import Tour from "./models/Tour.js";
 
 dotenv.config();
 
@@ -226,13 +227,41 @@ app.post("/login",async (req,res)=>{
             data:null,
         })
      }
+})
 
+app.post("/tours",async(req,res)=>{
+    const {title,Description,cities,StartDate,EndDate,Photos,userID}=
+    req.body;
+
+    const newTour=new Tour({
+        title,
+        Description,
+        cities,
+        StartDate,
+        EndDate,
+        Photos,
+        user:userID
+    })
+    try{
+        const saveTour=await newTour.save();
+
+        return res.json({
+            success:true,
+            message:"Tour created successfully",
+            data:saveTour
+        })
+    }catch(e){
+        return res.json({
+            success:false,
+            message:`Tour created failed ${e.message}`,
+            data:null
+        })
+    }
 })
 
 
 
 app.listen(PORT,()=>{
     console.log(`server is running on port ${PORT}`);
-
     connectDB();
 })
