@@ -262,6 +262,18 @@ app.post("/tours",checkJWT,async(req,res)=>{
     }
 })
 
+app.get("/tours",checkJWT,async(req,res)=>{
+    // const apicallingUser=req.user.id;
+    const tours=await Tour.find({user:req.user.id}).populate("user","-password")
+
+            return res.json({
+            success:true,
+            message:`Fetch tours succesfully`,
+            data:tours
+        })
+
+})
+
 
 
 app.listen(PORT,()=>{
