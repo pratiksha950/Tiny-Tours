@@ -80,7 +80,10 @@ const checkJWT=(req,res,next)=>{
 
     try{
     const decodedToken=jwt.verify(token,process.env.JWT_SECRET);
-    next();
+        console.log(decodedToken);
+        req.user=decodedToken;
+        next();
+
     }catch(e){
         return res.json({
             success:false,
@@ -229,8 +232,8 @@ app.post("/login",async (req,res)=>{
      }
 })
 
-app.post("/tours",async(req,res)=>{
-    const {title,Description,cities,StartDate,EndDate,Photos,userID}=
+app.post("/tours",checkJWT,async(req,res)=>{
+    const {title,Description,cities,StartDate,EndDate,Photos}=
     req.body;
 
     const newTour=new Tour({
@@ -240,7 +243,7 @@ app.post("/tours",async(req,res)=>{
         StartDate,
         EndDate,
         Photos,
-        user:userID
+        user:req.user.id
     })
     try{
         const saveTour=await newTour.save();
