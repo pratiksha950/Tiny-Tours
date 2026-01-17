@@ -6,8 +6,7 @@ import Button from "../components/Button.jsx"
 import axios from "axios"
 import toast,{Toaster} from "react-hot-toast"
 import {Link} from "react-router-dom"
-
-
+import Navbar from '../components/Navbar'
 
 function SignUp() {
     const [newUser, setNewUser]=useState({
@@ -46,7 +45,10 @@ function SignUp() {
     }
 
   return (
-    <div className="w-60 flex flex-col justify-center items-center m-auto gap-4 ">SignUp
+    <> <Navbar />
+    <div className="w-60 flex flex-col justify-center items-center m-auto gap-4 ">
+       
+        SignUp
         <Input 
         type="text"
         placeholder="Name"
@@ -97,6 +99,7 @@ function SignUp() {
 
        <Toaster/>
     </div>
+    </>
   )
 }
 

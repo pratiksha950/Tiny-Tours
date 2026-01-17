@@ -1,6 +1,6 @@
 import {useEffect} from "react"
 import {setPageTitle} from "../utils.jsx"
-
+import Navbar from '../components/Navbar'
 
 function Tours() {
     useEffect(()=>{
@@ -8,7 +8,9 @@ function Tours() {
     },[])
     
   return (
-    <div>Tours</div>
+    <div>
+      <Navbar />
+      Tours</div>
   )
 }
 

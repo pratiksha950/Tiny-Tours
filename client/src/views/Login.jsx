@@ -5,6 +5,8 @@ import Button from "../components/Button.jsx"
 import axios from "axios"
 import toast, { Toaster } from "react-hot-toast"
 import { Link } from "react-router-dom"
+import Navbar from '../components/Navbar'
+
 
 function Login() {
   useEffect(() => {
@@ -45,11 +47,12 @@ function Login() {
   }
 
   return (
+    <> <Navbar />
     <form
       onSubmit={checkUserLogin}
-      className="w-60 flex flex-col justify-center items-center m-auto gap-4"
+      className="w-60 flex flex-col justify-center items-center m-auto mt-10  gap-4 "
     >
-      <h2 className="font-semibold">Login</h2>
+      {/* <h2 className="font-semibold">Login</h2> */}
 
       <Input
         type="email"
@@ -71,7 +74,7 @@ function Login() {
         }
       />
 
-      <Button title="Login" type="submit" />
+      <Button title="Login" type="submit" varient=" secondary"/>
 
       <Link to="/signUp" className="text-blue-500 text-sm">
         Don't have an account? SignUp
@@ -79,6 +82,7 @@ function Login() {
 
       <Toaster />
     </form>
+    </>
   )
 }
 

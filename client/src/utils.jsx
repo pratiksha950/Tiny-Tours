@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 const setPageTitle=(title)=>{
     document.title=title;
 };
@@ -17,4 +18,12 @@ const getUserData=()=>{
     return JSON.parse(userData);
 }
 
-export {isUserLoggedIn,setPageTitle,getUserJwtToken,getUserData};
+const logOutUser=()=>{
+    localStorage.clear();
+    toast.success("Logged out succeefully")
+    setTimeout(()=>{
+        window.location.href="/login"
+    },500)
+}
+
+export {isUserLoggedIn,setPageTitle,getUserJwtToken,getUserData,logOutUser};

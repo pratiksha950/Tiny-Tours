@@ -1,5 +1,7 @@
 import {useEffect} from "react"
 import {setPageTitle} from "../utils.jsx"
+import Navbar from '../components/Navbar'
+
 
 
 function Home() {
@@ -8,7 +10,9 @@ function Home() {
     },[])
    
   return (
-    <div>Home</div>
+    <div>
+       <Navbar />
+       Home</div>
   )
 }
 
