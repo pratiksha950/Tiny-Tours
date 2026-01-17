@@ -3,7 +3,8 @@ import logo from "../assets/logo.png"
 import { getUserData,logOutUser } from '../utils'
 import Button from './Button';
 import {Toaster} from "react-hot-toast"
-import {Link} from "react-router"
+import { Link } from "react-router-dom"
+
 
 function Navbar() {
   const [userData,setUserData]=useState({});
@@ -19,7 +20,7 @@ function Navbar() {
   },[])
 
   return (
-    <div className="bg-blue-400 text-white px-6 py-3 flex justify-around item-center">
+    <div className="bg-blue-400 text-white px-6 py-3 flex justify-around items-center">
       <div>
         <Link to="/">
       <img src={logo} alt="logo" className='h-8 inline-block' />

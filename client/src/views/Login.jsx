@@ -19,21 +19,24 @@ function Login() {
   })
 
   const checkUserLogin = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       const response = await axios.post(
         "http://localhost:8080/login",
         loginUser
       )
+      console.log(response.data);
 
       if (response.data.success) {
         toast.success(response.data.message, { id: "loginSuccess" })
         setLoginUser({ email: "", password: "" })
-        const {jwtToken,data}=response.data;
 
-        localStorage.setItem("userJwtToken",jwtToken);
+
+        const {token,data}=response.data;
+        localStorage.setItem("userJwtToken",token);
         localStorage.setItem("userData",JSON.stringify(data));
+
         setTimeout(()=>{
           window.location.href="/dashboard";
         },1500)

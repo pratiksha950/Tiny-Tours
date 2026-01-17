@@ -1,11 +1,11 @@
-import React, { useEffect ,useState} from 'react'
+import React, { useEffect} from 'react'
 import Navbar from '../components/Navbar'
 import axios from 'axios'
 import toast ,{Toaster} from 'react-hot-toast'
 import { getUserJwtToken } from '../utils';
 
 function Dashboard() {
-    const [tours,setTours]=useState([]);
+    // const [tours,setTours]=useState([]);
 
     const userJwt=getUserJwtToken();
 
