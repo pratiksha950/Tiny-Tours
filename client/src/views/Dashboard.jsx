@@ -19,6 +19,7 @@ function Dashboard() {
         });
         if(response.data.success){
             toast.success(response.data.message)
+            setTours(response.data.data)
         }else{
             toast.error(response.data.message)
         }
@@ -35,8 +36,6 @@ function Dashboard() {
         <Link to="/newtour">
         <img src={newTour} alt='newTour' className='fixed bottom-10 right-10 h-10 curser-pointer' />
         </Link>
-
-
 
 
         <Toaster />
