@@ -1,42 +1,84 @@
-import {useEffect, useState} from "react"
-import {setPageTitle} from "../utils.jsx"
+import { useEffect, useState } from "react"
+import { setPageTitle } from "../utils.jsx"
 import Input from "../components/Input.jsx"
 import Button from "../components/Button.jsx"
 import axios from "axios"
+import toast, { Toaster } from "react-hot-toast"
+import { Link } from "react-router-dom"
 
 function Login() {
-    useEffect(()=>{
-        setPageTitle("Login-TinyTour")
-    },[])
+  useEffect(() => {
+    setPageTitle("Login-TinyTour")
+  }, [])
 
-    const [loginUser,setLoginUser]=useState({
-      email:"",
-      password:""
-    })
+  const [loginUser, setLoginUser] = useState({
+    email: "",
+    password: ""
+  })
 
-    const checkUserLogin=async()=>{
-      const response=await axios.post("http://localhost:8080/login",loginUser)
-      console.log(response.data)
+  const checkUserLogin = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/login",
+        loginUser
+      )
+
+      if (response.data.success) {
+        toast.success(response.data.message, { id: "loginSuccess" })
+        setLoginUser({ email: "", password: "" })
+        const {jwtToken,data}=response.data;
+
+        localStorage.setItem("userJwtToken",jwtToken);
+        localStorage.setItem("userData",JSON.stringify(data));
+        setTimeout(()=>{
+          window.location.href="/dashboard";
+        },1500)
+
+      } else {
+        toast.error(response.data.message, { id: "loginFail" })
+      }
+    } catch (error) {
+      toast.error("Server not responding"+error.message)
     }
+  }
+
   return (
-    <div className="w-60 flex flex-col justify-center items-center m-auto gap-4 ">Login
-      <Input 
+    <form
+      onSubmit={checkUserLogin}
+      className="w-60 flex flex-col justify-center items-center m-auto gap-4"
+    >
+      <h2 className="font-semibold">Login</h2>
+
+      <Input
         type="email"
         placeholder="Email"
+        autoComplete="off"
         value={loginUser.email}
-        onChange={(e)=>{setLoginUser({...loginUser,email:e.target.value})}}
-        />
+        onChange={(e) =>
+          setLoginUser({ ...loginUser, email: e.target.value })
+        }
+      />
 
-        <Input 
+      <Input
         type="password"
-        placeholder="password"
+        placeholder="Password"
+        autoComplete="new-password"
         value={loginUser.password}
-        onChange={(e)=>{setLoginUser({...loginUser,password:e.target.value})}}
-        />
+        onChange={(e) =>
+          setLoginUser({ ...loginUser, password: e.target.value })
+        }
+      />
 
-        <Button title="login" onClick={checkUserLogin}/>
+      <Button title="Login" type="submit" />
 
-    </div>
+      <Link to="/signUp" className="text-blue-500 text-sm">
+        Don't have an account? SignUp
+      </Link>
+
+      <Toaster />
+    </form>
   )
 }
 

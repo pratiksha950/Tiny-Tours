@@ -5,6 +5,8 @@ import Input from "../components/Input.jsx"
 import Button from "../components/Button.jsx"
 import axios from "axios"
 import toast,{Toaster} from "react-hot-toast"
+import {Link} from "react-router-dom"
+
 
 
 function SignUp() {
@@ -41,7 +43,6 @@ function SignUp() {
         }else{
             toast.error(response.data.message,{id:"signuperror"})
         }
-        
     }
 
   return (
@@ -50,6 +51,7 @@ function SignUp() {
         type="text"
         placeholder="Name"
         value={newUser.name}
+        autoComplete="off"
         onChange={(e)=>{setNewUser({...newUser,name:e.target.value})}}
         />
 
@@ -57,6 +59,7 @@ function SignUp() {
         type="email"
         placeholder="Email"
         value={newUser.email}
+        autoComplete="off"
         onChange={(e)=>{setNewUser({...newUser,email:e.target.value})}}
         />
 
@@ -84,11 +87,14 @@ function SignUp() {
         <Input 
         type="password"
         placeholder="password"
+        autoComplete="new-password"
         value={newUser.password}
         onChange={(e)=>{setNewUser({...newUser,password:e.target.value})}}
         />
 
         <Button title="signUp" onClick={createUser}/>
+        <Link to="/login" className="text-blue-500">Already have an account? Login</Link>
+
        <Toaster/>
     </div>
   )

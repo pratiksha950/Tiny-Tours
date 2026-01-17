@@ -8,6 +8,7 @@ import SignUp from "./views/SignUp";
 import Tours from "./views/Tours";
 import NewTour from "./views/NewTour";
 import EditTour from "./views/EditTour";
+import Dashboard from "./views/Dashboard";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")).render(
       <Route path="/login" element={<Login />} />
       <Route path="/signUp" element={<SignUp />} />
       <Route path="/tours" element={<Tours />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/newtour" element={<NewTour />} />
       <Route path="/editTour" element={<EditTour />} />
     </Routes>
