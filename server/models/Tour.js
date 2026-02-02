@@ -24,10 +24,10 @@ const TourSchema=new Schema({
         ref:"User",
         required:true
     },
-        StartDate:{
+        startDate:{
         type:Date,
     },
-    EndDate:{
+    endDate:{
     type:Date,
     }
 

@@ -7,8 +7,12 @@ import Button from "../components/Button.jsx";
 import axios from "axios";
 import toast,{Toaster} from "react-hot-toast";
 import {getUserJwtToken} from "../utils.jsx"
+import { useNavigate } from "react-router-dom";
+
 
 function NewTour() {
+  const navigate = useNavigate();
+
       const [newTour,setNewTour]=useState({
         title:"",
         Description:"",
@@ -28,6 +32,7 @@ function NewTour() {
       console.log(response.data);
       if(response.data.success){
         toast.success(response.data.message)
+        navigate("/dashboard"); 
       }else{
         toast.error(response.data.message)
       }

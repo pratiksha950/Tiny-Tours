@@ -4,15 +4,15 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const getTours=async(req,res)=>{
-    const {title,Description,cities,StartDate,EndDate,Photos}=
+    const {title,Description,cities,startDate,endDate,Photos}=
     req.body;
 
     const newTour=new Tour({
         title,
         Description,
         cities,
-        StartDate,
-        EndDate,
+        startDate: startDate ? new Date(startDate) : null,
+        endDate: endDate ? new Date(endDate) : null,
         Photos,
         user:req.user.id
     })
@@ -23,7 +23,8 @@ const getTours=async(req,res)=>{
             success:true,
             message:"Tour created successfully",
             data:saveTour
-        })
+        }
+    )
     }catch(e){
         return res.json({
             success:false,
@@ -68,12 +69,12 @@ const putTours=async(req,res)=>{
         })
     }
 
-            const {title,Description,cities,StartDate,EndDate,Photos}=
+            const {title,Description,cities,startDate,endDate,Photos}=
     req.body;
 
    await Tour.updateOne(
         {_id:id},
-        {title,Description,cities,StartDate,EndDate,Photos}
+        {title,Description,cities,startDate,endDate,Photos}
     )
 
      const updatedTour=await Tour.findById(id);
