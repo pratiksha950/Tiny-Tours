@@ -2,6 +2,7 @@ import dotenv from "dotenv"
 import express from "express";
 import cors from "cors"; 
 import connectDB from "./db.js";
+import ImageKit from "@imagekit/nodejs";
 
 
 dotenv.config();
@@ -17,59 +18,21 @@ import {getTours,postTour,putTours} from "./controllers/tours.js"
 //Middleware
 import {checkJWT} from "./middlewares/jwt.js"
 
+const client = new ImageKit({
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY
+});
+
+
 const app=express();
 app.use(express.json());
 app.use(cors());
 
 const PORT=process.env.PORT || 8080;
 
-// const gatekepper=(req,res,next)=>{
-//      const {name,isSociatyMember}=req.body;
-//      console.log(`hellow ${name}`);
-
-//      if(isSociatyMember){
-//         next();
-//      }else{
-//         return res.json({
-//             message:"access denied you must be society member"
-//         })
-//      } 
-// }
-
-// const areYouDrunk=(req,res,next)=>{
-//     const {areYouDrunk}=req.body;
-
-//     if(areYouDrunk){
-//         return res.json({message:"entry denied for Drunk"})
-//     }else{
-//         next();
-//     }
-// }
-
-// const ModakSociaty=(req,res)=>{
-//     console.log("Inside  Modaksociaty");
-//     const random=Math.round(Math.random()*100);
-
-//     return res.json({
-//         message:"thank you for visiting  Modaksociaty",
-//         random
-//     })
-// }
-
-// const ShamSociaty=(req,res)=>{
-//     console.log("Inside Sham sociaty");
-//     const random=Math.round(Math.random()*100);
-
-//     return res.json({
-//         message:"thank you for visiting sham sociaty",
-//         random
-//     })
-// }
-
-// app.post("/ModakSociaty",gatekepper,areYouDrunk,ModakSociaty);
-
-// app.post("/ShamSociaty",gatekepper,ShamSociaty);
-
+app.get('/auth', function (req, res) {
+  const { token, expire, signature } = client.helper.getAuthenticationParameters();
+  res.send({ token, expire, signature, publicKey: process.env.IMAGEKIT_PUBLIC_KEY });
+});
 
 //health Routes
 app.get("/",getHome) 

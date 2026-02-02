@@ -1,4 +1,4 @@
-import {useEffect,useState} from "react"
+import {useEffect,useState,useRef} from "react"
 import {setPageTitle} from "../utils.jsx"
 import Navbar from '../components/Navbar'
 import Input from "../components/Input.jsx";
@@ -8,6 +8,15 @@ import axios from "axios";
 import toast,{Toaster} from "react-hot-toast";
 import {getUserJwtToken} from "../utils.jsx"
 import { useNavigate } from "react-router-dom";
+
+//****** */
+import {
+    ImageKitAbortError,
+    ImageKitInvalidRequestError,
+    ImageKitServerError,
+    ImageKitUploadNetworkError,
+    upload,
+} from "@imagekit/react";
 
 
 function NewTour() {
