@@ -66,8 +66,6 @@ const putTours=async(req,res)=>{
             message:`Unautherized to update this tour`,
             data:null
         })
-
-
     }
 
             const {title,Description,cities,StartDate,EndDate,Photos}=

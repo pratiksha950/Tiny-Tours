@@ -5,6 +5,8 @@ import toast ,{Toaster} from 'react-hot-toast'
 import { getUserJwtToken } from '../utils';
 import newTour from "../assets/new-tour.png"
 import {Link} from "react-router-dom"
+import TourCard from '../components/TourCard';
+
 
 function Dashboard() {
     const [tours,setTours]=useState([]);
@@ -32,12 +34,19 @@ function Dashboard() {
   return (
     <div>
         <Navbar />
-
+        <div className='w-11/12 m-auto mt-10 mb-10'>
         <Link to="/newtour">
         <img src={newTour} alt='newTour' className='fixed bottom-10 right-10 h-10 curser-pointer' />
         </Link>
 
 
+       {tours.map((tourItem, index) => {
+       console.log("tourItem:", tourItem);
+        return <TourCard key={index} {...tourItem} />;
+    })}
+
+
+        </div>
         <Toaster />
     </div>
   )

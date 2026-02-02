@@ -15,11 +15,7 @@ const TourSchema=new Schema({
     },
     Photos:{
         type:[
-            {
-                imgURL:String,
-                title:String,
-                Description:String
-            }
+            String
         ],
         default:[]
     },
