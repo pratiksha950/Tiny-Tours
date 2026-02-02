@@ -1,6 +1,7 @@
 import React from 'react'
 import {Building2} from "lucide-react"
 import Avatar from './Avatar';
+import PhotoViewer from './PhotoViewer';
 
 function TourCard({_id,title,Description,cities,user,Photos,createdAt,updatedAt,StartDate,EndDate}) {
   const {name,email}=user;
@@ -36,7 +37,7 @@ function TourCard({_id,title,Description,cities,user,Photos,createdAt,updatedAt,
 
     <div className='mt-4 flex flex-wrap gap-2'>
   {Photos.map((photo,index)=>{
-    return <img key={index} src={photo} alt={title} className="mt-4 w-34 h-34 object-cover rounded-md cursor-pointer" />
+    return PhotoViewer({imgUrl:photo,index})
   })}
   </div>
 </div>
