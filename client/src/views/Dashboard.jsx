@@ -14,7 +14,7 @@ function Dashboard() {
     const userJwt=getUserJwtToken();
 
     const loadTours=async ()=>{
-        const response=await axios.get("http://localhost:8080/tours",{
+        const response=await axios.get(`${import.meta.env.VITE_API_BASE_URL}/tours`,{
             headers:{
                 Authorization:`Bearer ${userJwt}`
             }

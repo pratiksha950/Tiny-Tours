@@ -23,7 +23,7 @@ function SignUp() {
     },[])
 
     const createUser=async()=>{
-        const response=await axios.post("http://localhost:8080/signUp",newUser);
+        const response=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/signUp`,newUser);
         console.log(response.data);
         if(response.data.success){
             toast.success(response.data.message,{id:"signupSuccess"})
