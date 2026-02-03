@@ -29,14 +29,16 @@ app.use(cors());
 
 const PORT=process.env.PORT || 8080;
 
+//health Routes
+app.get("/",getHome) 
+app.get("/Health",getHealth)
+
+
 app.get('/auth', function (req, res) {
   const { token, expire, signature } = client.helper.getAuthenticationParameters();
   res.send({ token, expire, signature, publicKey: process.env.IMAGEKIT_PUBLIC_KEY });
 });
 
-//health Routes
-app.get("/",getHome) 
-app.get("/Health",getHealth)
 
 
 
