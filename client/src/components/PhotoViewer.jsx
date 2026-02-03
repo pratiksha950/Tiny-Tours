@@ -1,5 +1,6 @@
 import React from 'react'
 import {useState} from 'react'
+import {Trash} from "lucide-react"
 
 function PhotoPreviewer({imgUrl,show,onClose}) {
    
@@ -12,19 +13,24 @@ function PhotoPreviewer({imgUrl,show,onClose}) {
   )
 }
 
-function PhotoViewer({imgUrl,index}) {
+function PhotoViewer({imgUrl,index,onDelete,showDelete=false}) {
      const [showPreview,setShowPreview]=useState(false);
     return (
-        <>
+        <div className="relative w-fit shadow-md ">
+          <img key={index} src={imgUrl} alt="Tour" className="mt-4 w-30 h-30 object-cover rounded-md cursor-pointer" 
+          onClick={()=>setShowPreview(true)}/>
 
-    <img key={index} src={imgUrl} alt="Tour" className="mt-4 w-34 h-34 object-cover rounded-md cursor-pointer" 
-    onClick={()=>setShowPreview(true)}/>
-
+          {
+            showDelete?<Trash className='absolute right-2 top-5 text-red-500'  onClick={(e) => {
+            e.stopPropagation();  
+            onDelete(index);      
+          }}/>:null
+          }
 
          <PhotoPreviewer key={imgUrl} imgUrl={imgUrl} show={showPreview} onClose={()=>{
             setShowPreview(false);
          }}/>
-        </>
+        </div>
 )}
 
 export default PhotoViewer

@@ -13,7 +13,7 @@ const TourSchema=new Schema({
         type:[String],
         default:[],
     },
-    Photos:{
+    photos:{
         type:[
             String
         ],

@@ -25,7 +25,6 @@ function Dashboard() {
         }else{
             toast.error(response.data.message)
         }
-        
     }
         useEffect(()=>{
             loadTours();

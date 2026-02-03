@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const getTours=async(req,res)=>{
-    const {title,Description,cities,startDate,endDate,Photos}=
+    const {title,Description,cities,startDate,endDate,photos}=
     req.body;
 
     const newTour=new Tour({
@@ -13,7 +13,7 @@ const getTours=async(req,res)=>{
         cities,
         startDate: startDate ? new Date(startDate) : null,
         endDate: endDate ? new Date(endDate) : null,
-        Photos,
+        photos,
         user:req.user.id
     })
     try{

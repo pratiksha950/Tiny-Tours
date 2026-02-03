@@ -8,6 +8,7 @@ import axios from "axios";
 import toast,{Toaster} from "react-hot-toast";
 import {getUserJwtToken} from "../utils.jsx"
 import { useNavigate } from "react-router-dom";
+import PhotoViewer from "../components/PhotoViewer.jsx";
 
 import {
     ImageKitAbortError,
@@ -77,17 +78,14 @@ function NewTour() {
     },[])
 
          const handleUpload = async () => {
-        // Access the file input element using the ref
         const fileInput = fileInputRef.current;
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
             alert("Please select a file to upload");
             return;
         }
 
-        // Extract the first file from the file input
         const file = fileInput.files[0];
 
-        // Retrieve authentication parameters for the upload.
         let authParams;
         try {
             authParams = await authenticator();
@@ -96,8 +94,6 @@ function NewTour() {
             return;
         }
         const { signature, expire, token, publicKey } = authParams;
-
-        // Call the ImageKit SDK upload function with the required parameters and callbacks.
         try {
             const uploadResponse = await upload({
                 // Authentication parameters
@@ -118,10 +114,11 @@ function NewTour() {
               ...newTour,
               photos:[...newTour.photos,uploadResponse.url]
             })
+            setProgress(0);
+            fileInput.value="";
             console.log("Upload response:", uploadResponse);
 
         } catch (error) {
-            // Handle specific error types provided by the ImageKit SDK.
             if (error instanceof ImageKitAbortError) {
                 console.error("Upload aborted:", error.reason);
             } else if (error instanceof ImageKitInvalidRequestError) {
@@ -131,7 +128,6 @@ function NewTour() {
             } else if (error instanceof ImageKitServerError) {
                 console.error("Server error:", error.message);
             } else {
-                // Handle any other errors that may occur.
                 console.error("Upload error:", error);
             }
         }
@@ -205,19 +201,30 @@ function NewTour() {
         })
       }}
       />
-      {newTour.photos?.map((photo,index)=>(
-        <img key={index}
-         src={photo}
-          alt={`tour-photo ${index+1}`} 
-          className="h-20 w-20 mr-2 object-cover"/>
-      ))}
+      <div className="flex gap-x-4 flex-wrap">
+{newTour.photos?.map((photo, index) => (
+  <PhotoViewer
+    key={index}
+    imgUrl={photo}
+    index={index}
+    showDelete
+    onDelete={(deleteIndex) => {
+      setNewTour(prev => ({
+        ...prev,
+        photos: prev.photos.filter((_, i) => i !== deleteIndex)
+      }));
+    }}
+  />
+))}
+</div>
 
       <input type="file" ref={fileInputRef} onChange={(e)=>{
         if (e.target.files.length > 0) {
           handleUpload();
         }
       }}/>
-      {progress}%
+      {progress>0 ? `Uploading ${progress}%` :null}
+      
 
       </div>
 

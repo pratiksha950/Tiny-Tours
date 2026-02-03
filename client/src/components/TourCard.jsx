@@ -4,7 +4,7 @@ import Avatar from './Avatar';
 import PhotoViewer from './PhotoViewer';
 import { Footprints ,LandPlot} from 'lucide-react';
 
-function TourCard({_id,title,Description,cities,user,Photos,startDate,endDate}) {
+function TourCard({_id,title,Description,cities,user,photos,startDate,endDate}) {
   const {name,email}=user;
   return (
 <div className="w-2/3 mx-auto my-6 rounded-xl border border-gray-200 bg-white p-5 shadow-md transition hover:shadow-xl">
@@ -41,12 +41,11 @@ function TourCard({_id,title,Description,cities,user,Photos,startDate,endDate}) 
      <strong className='ml-2'>{name} </strong> ({email})
   </div>
 
-    <div className='mt-4 flex flex-wrap gap-2'>
-  {Photos.map((photo,index)=>{
-    return PhotoViewer({imgUrl:photo,index})
-  })}
-  </div>
-</div>
+<div className="mt-4 flex flex-wrap gap-2">
+        {photos?.map((photo, index) => (
+          <PhotoViewer key={index} imgUrl={photo} index={index} />
+        ))}
+      </div></div>
   )
 }
 
