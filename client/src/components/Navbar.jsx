@@ -21,27 +21,46 @@ function Navbar() {
   },[])
 
   return (
-    <div className="bg-blue-400 text-white px-6 py-3 flex justify-around items-center">
-      <div>
+    <div className="
+      fixed top-0 left-0 w-full z-50
+     bg-gray-800 
+      px-8 py-4
+      flex items-center justify-between
+      shadow-lg h-19 text-white
+    ">
+      <div className="flex items-center gap-3" >
         <Link to="/">
-      <img src={logo} alt="logo" className='h-8 inline-block' />
-      <span>Tiny Tours</span>
+      <img src={logo} alt="logo" className='h-8 inline-block m-4 '/>
+      <span className='text-xl font-extrabold text-white'>TripSpotter</span>
       </Link>
     </div>
 
-    <div>
-    {userData?.name?(
-      <div className='flex item-center'>
-        <Avatar name={userData.name} />
-        Hello, {userData.name}!
-       <Button title="Logout" varient=' secondary' onClick={logOutUser}/>
-      </div>
-    ):(
-      <Link to="/login" className='bg-white text-blue-500 rounded mr-2 py-1'>Login
-      </Link>
-    )}
-
+    <div className="text-xl font-extrabold text-white">
+      <Link to="/" className='mx-4'>Home</Link>
+      <Link to="/newTour" className='mx-4'>Add Tours</Link>
+      <Link to="/dashboard" className='mx-4'>See Tours</Link>
     </div>
+
+<div className="flex items-center gap-4 justify-center">
+  {userData?.name ? (
+    <div className="flex items-center gap-4">
+      <Avatar name={userData.name} />
+      <span>Hello, {userData.name}!</span>
+      <Button
+        title="Logout"
+        varient="secondary"
+        onClick={logOutUser}
+      />
+    </div>
+  ) : (
+    <Link
+      to="/login"
+      className="bg-white text-blue-500 rounded px-4 py-1"
+    >
+      Login
+    </Link>
+  )}
+</div>
     <Toaster />
    </div>
   )
