@@ -84,5 +84,23 @@ const putTours=async(req,res)=>{
         data:updatedTour
         })  
 }
+const GetTourById=async(req,res)=>{
+    const {id}=req.params;
+    const tour=await Tour.findById(id).populate("user","-password");
+
+    if(!tour){
+        return res.status(404).json({
+            success:false,
+            message:"Tour not found",
+            data:null
+        })
+    }
+    return res.json({
+        success:true,
+        message:"Tour fetched successfully",
+        data:tour
+    })
+
+}
     
-export {getTours,postTour,putTours}
+export {getTours,postTour,putTours,GetTourById}

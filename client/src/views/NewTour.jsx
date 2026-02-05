@@ -135,8 +135,9 @@ function NewTour() {
 
 
   return (
-    <div>
-      <Navbar />
+    <>
+    <Navbar />
+    <div className="my-10">
       <h1>Add New Tour</h1>
 
       <div className="w-75 block mx-auto mt-10 ">
@@ -228,11 +229,12 @@ function NewTour() {
 
       </div>
 
-      <div>
+      <div className="w-75 block mx-auto mt-10 ">
         <Button title="add tour" onClick={addTour}  varient="primary"/>
       </div>
       <Toaster />
       </div>
+      </>
   )
 }
 

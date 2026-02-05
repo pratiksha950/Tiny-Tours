@@ -13,7 +13,7 @@ import {getHome,getHealth} from "./controllers/health.js"
 //auth/js
 import {postSignUp,postLogin} from "./controllers/auth.js"
 //tour.js
-import {getTours,postTour,putTours} from "./controllers/tours.js"
+import {getTours,postTour,putTours,GetTourById} from "./controllers/tours.js"
 
 //Middleware
 import {checkJWT} from "./middlewares/jwt.js"
@@ -60,6 +60,7 @@ app.get('/auth', function (req, res) {
 app.post("/signUp",postSignUp);
 app.post("/login",postLogin);
 app.put("/tours/:id",checkJWT,putTours)
+app.get("/tours/:id",checkJWT,GetTourById)
 
 //Tour   Routes
 app.post("/tours",checkJWT,getTours)

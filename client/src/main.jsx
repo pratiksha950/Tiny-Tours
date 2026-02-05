@@ -19,7 +19,7 @@ createRoot(document.getElementById("root")).render(
       <Route path="/tours" element={<Tours />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/newtour" element={<NewTour />} />
-      <Route path="/editTour" element={<EditTour />} />
+      <Route path="/tours/:id/edit" element={<EditTour />} />
     </Routes>
   </BrowserRouter>
 );

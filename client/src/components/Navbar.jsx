@@ -35,7 +35,7 @@ function Navbar() {
       </Link>
     </div>
 
-    <div className="text-xl font-extrabold text-white">
+    <div className="text-[18px] font-extrabold montserrat-500">
       <Link to="/" className='mx-4'>Home</Link>
       <Link to="/newTour" className='mx-4'>Add Tours</Link>
       <Link to="/dashboard" className='mx-4'>See Tours</Link>
@@ -43,7 +43,7 @@ function Navbar() {
 
 <div className="flex items-center gap-4 justify-center">
   {userData?.name ? (
-    <div className="flex items-center gap-4">
+    <Link className="flex items-center gap-4" to="/dashboard">
       <Avatar name={userData.name} />
       <span>Hello, {userData.name}!</span>
       <Button
@@ -51,7 +51,7 @@ function Navbar() {
         varient="secondary"
         onClick={logOutUser}
       />
-    </div>
+    </Link>
   ) : (
     <Link
       to="/login"
