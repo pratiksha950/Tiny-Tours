@@ -51,11 +51,11 @@ function Login() {
 
   return (
     <> <Navbar />
+    <h1 className="mt-20 text-xl  text-center" >Login</h1>
     <form
       onSubmit={checkUserLogin}
-      className="w-60 flex flex-col justify-center items-center m-auto mt-10  gap-4 "
+      className="w-60 flex flex-col justify-center items-center m-auto mt-5 gap-4 "
     >
-      {/* <h2 className="font-semibold">Login</h2> */}
 
       <Input
         type="email"

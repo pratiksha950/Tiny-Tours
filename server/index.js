@@ -21,7 +21,7 @@ import {checkJWT} from "./middlewares/jwt.js"
 const client = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY
 });
-
+  
 
 const app=express();
 app.use(express.json());
@@ -31,7 +31,7 @@ const PORT=process.env.PORT || 8080;
 
 //health Routes
 app.get("/",getHome) 
-app.get("/Health",getHealth)
+app.get("/health",getHealth)
 
 
 app.get('/auth', function (req, res) {

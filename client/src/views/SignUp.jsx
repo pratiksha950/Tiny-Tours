@@ -48,7 +48,7 @@ function SignUp() {
     <> <Navbar />
     <div className="w-60 flex flex-col justify-center items-center m-auto gap-4 ">
        
-        SignUp
+        <h1 className="mt-20 text-xl  text-center" >Sign Up</h1>
         <Input 
         type="text"
         placeholder="Name"
