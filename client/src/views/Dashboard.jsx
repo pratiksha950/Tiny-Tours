@@ -33,7 +33,7 @@ function Dashboard() {
   return (
     <div>
         <Navbar />
-        <div className='w-11/12 m-auto mt-10 mb-10'>
+        <div className='w-11/12 m-auto mt-30 mb-10'>
         <Link to="/newtour">
         <img src={newTour} alt='newTour' className='fixed bottom-10 right-10 h-10 curser-pointer' />
         </Link>

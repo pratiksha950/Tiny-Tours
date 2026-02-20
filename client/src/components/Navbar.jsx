@@ -37,6 +37,7 @@ function Navbar() {
 
     <div className="text-[18px] font-extrabold montserrat-500">
       <Link to="/" className='mx-4'>Home</Link>
+      <Link to="/about" className='mx-4'>About</Link>
       <Link to="/newTour" className='mx-4'>Add Tours</Link>
       <Link to="/dashboard" className='mx-4'>See Tours</Link>
     </div>

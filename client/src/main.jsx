@@ -9,6 +9,7 @@ import Tours from "./views/Tours";
 import NewTour from "./views/NewTour";
 import EditTour from "./views/EditTour";
 import Dashboard from "./views/Dashboard";
+import About from "./views/About";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -20,6 +21,7 @@ createRoot(document.getElementById("root")).render(
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/newtour" element={<NewTour />} />
       <Route path="/tours/:id/edit" element={<EditTour />} />
+      <Route path="/about" element={<About />} />
     </Routes>
   </BrowserRouter>
 );
