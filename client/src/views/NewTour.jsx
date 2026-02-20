@@ -107,7 +107,6 @@ function NewTour() {
                 onProgress: (event) => {
                     setProgress((event.loaded / event.total) * 100);
                 },
-                // Abort signal to allow cancellation of the upload if needed.
               
             });
             setNewTour({
@@ -137,103 +136,125 @@ function NewTour() {
   return (
     <>
     <Navbar />
-    <div className="my-10">
-      <h1>Add New Tour</h1>
 
-      <div className="w-75 block mx-auto mt-10 ">
+<div className="my-10 px-4">
+  <h1 className="text-3xl font-bold text-center text-gray-800">
+    Add New Tour
+  </h1>
 
-      <Input type={"text"}
-      placeholder={"Enter Title"} 
+  <div className="max-w-2xl mx-auto mt-10 bg-white shadow-xl p-6 rounded-xl border">
+
+    <Input
+      type={"text"}
+      placeholder={"Enter Title"}
       value={newTour.title}
-      onChange={(e)=>{
+      onChange={(e) => {
         setNewTour({
           ...newTour,
-          title:e.target.value,
-        })
+          title: e.target.value,
+        });
       }}
-      />
+      className="mb-4"
+    />
 
-
-      <Input type={"text"} 
+    <Input
+      type={"text"}
       placeholder={"Enter Description"}
       value={newTour.Description}
-      onChange={(e)=>{
+      onChange={(e) => {
         setNewTour({
           ...newTour,
-          Description:e.target.value,
-        })
+          Description: e.target.value,
+        });
       }}
-      />
+      className="mb-4"
+    />
 
-      <MultiSelect selectedItems={newTour.cities} 
+    <MultiSelect
+      selectedItems={newTour.cities}
       placeholder={"Enter city"}
-      onAddItem={(val)=>{
-                   setNewTour({
-            ...newTour,
-            cities:[...newTour.cities,val]
-          })
-      }}
-      onRemoveItem={(val)=>{
+      onAddItem={(val) => {
         setNewTour({
           ...newTour,
-          cities:newTour.cities.filter((city)=>city!==val)
-        })
+          cities: [...newTour.cities, val],
+        });
       }}
-      />
+      onRemoveItem={(val) => {
+        setNewTour({
+          ...newTour,
+          cities: newTour.cities.filter((city) => city !== val),
+        });
+      }}
+      className="mb-4"
+    />
 
-            <Input type={"date"} 
+    <Input
+      type={"date"}
       placeholder={"Enter startDate"}
       value={newTour.startDate}
-      onChange={(e)=>{
+      onChange={(e) => {
         setNewTour({
           ...newTour,
-          startDate:e.target.value,
-        })
+          startDate: e.target.value,
+        });
       }}
-      />
+      className="mb-4"
+    />
 
-      <Input type={"date"} 
+    <Input
+      type={"date"}
       placeholder={"Enter endDate"}
       value={newTour.endDate}
-      onChange={(e)=>{
+      onChange={(e) => {
         setNewTour({
           ...newTour,
-          endDate:e.target.value,
-        })
+          endDate: e.target.value,
+        });
       }}
-      />
-      <div className="flex gap-x-4 flex-wrap">
-{newTour.photos?.map((photo, index) => (
-  <PhotoViewer
-    key={index}
-    imgUrl={photo}
-    index={index}
-    showDelete
-    onDelete={(deleteIndex) => {
-      setNewTour(prev => ({
-        ...prev,
-        photos: prev.photos.filter((_, i) => i !== deleteIndex)
-      }));
-    }}
-  />
-))}
-</div>
+      className="mb-4"
+    />
 
-      <input type="file" ref={fileInputRef} onChange={(e)=>{
+    <div className="flex gap-3 flex-wrap mb-4">
+      {newTour.photos?.map((photo, index) => (
+        <PhotoViewer
+          key={index}
+          imgUrl={photo}
+          index={index}
+          showDelete
+          onDelete={(deleteIndex) => {
+            setNewTour((prev) => ({
+              ...prev,
+              photos: prev.photos.filter((_, i) => i !== deleteIndex),
+            }));
+          }}
+        />
+      ))}
+    </div>
+
+    <input
+      type="file"
+      ref={fileInputRef}
+      onChange={(e) => {
         if (e.target.files.length > 0) {
           handleUpload();
         }
-      }}/>
-      {progress>0 ? `Uploading ${progress}%` :null}
-      
+      }}
+      className="block w-full border border-gray-300 p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+    />
 
-      </div>
+    {progress > 0 && (
+      <p className="mt-2 text-sm text-blue-600 font-semibold">
+        Uploading {progress.toFixed(0)}%
+      </p>
+    )}
+  </div>
 
-      <div className="w-75 block mx-auto mt-10 ">
-        <Button title="add tour" onClick={addTour}  varient="primary"/>
-      </div>
-      <Toaster />
-      </div>
+  <div className="max-w-2xl mx-auto mt-6 text-center">
+    <Button title="Add Tour" onClick={addTour} varient="primary" />
+  </div>
+
+  <Toaster />
+</div>
       </>
   )
 }

@@ -50,41 +50,53 @@ function Login() {
   }
 
   return (
-    <> <Navbar />
-    <h1 className="mt-20 text-xl  text-center" >Login</h1>
-    <form
-      onSubmit={checkUserLogin}
-      className="w-60 flex flex-col justify-center items-center m-auto mt-5 gap-4 "
-    >
+    <> 
+    <> 
+<Navbar />
 
-      <Input
-        type="email"
-        placeholder="Email"
-        autoComplete="off"
-        value={loginUser.email}
-        onChange={(e) =>
-          setLoginUser({ ...loginUser, email: e.target.value })
-        }
-      />
+<h1 className="mt-20 text-3xl font-bold text-center text-gray-800">
+  Login
+</h1>
 
-      <Input
-        type="password"
-        placeholder="Password"
-        autoComplete="new-password"
-        value={loginUser.password}
-        onChange={(e) =>
-          setLoginUser({ ...loginUser, password: e.target.value })
-        }
-      />
+<form
+  onSubmit={checkUserLogin}
+  className="w-full max-w-md mx-auto mt-6 bg-white shadow-xl p-6 rounded-xl flex flex-col gap-4 border"
+>
 
-      <Button title="Login" type="submit" varient=" secondary"/>
+  <Input
+    type="email"
+    placeholder="Email"
+    autoComplete="off"
+    value={loginUser.email}
+    onChange={(e) =>
+      setLoginUser({ ...loginUser, email: e.target.value })
+    }
+    className="w-full"
+  />
 
-      <Link to="/signUp" className="text-blue-500 text-sm">
-        Don't have an account? SignUp
-      </Link>
+  <Input
+    type="password"
+    placeholder="Password"
+    autoComplete="new-password"
+    value={loginUser.password}
+    onChange={(e) =>
+      setLoginUser({ ...loginUser, password: e.target.value })
+    }
+    className="w-full"
+  />
 
-      <Toaster />
-    </form>
+  <Button title="Login" type="submit" varient=" secondary" />
+
+  <Link 
+    to="/signUp" 
+    className="text-blue-600 text-sm text-center hover:underline"
+  >
+    Don't have an account? Sign Up
+  </Link>
+
+  <Toaster />
+</form>
+</>
     </>
   )
 }

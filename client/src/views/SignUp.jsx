@@ -1,106 +1,130 @@
-import {useEffect} from "react"
-import {setPageTitle} from "../utils.jsx"
-import { useState } from "react"
-import Input from "../components/Input.jsx"
-import Button from "../components/Button.jsx"
-import axios from "axios"
-import toast,{Toaster} from "react-hot-toast"
-import {Link} from "react-router-dom"
-import Navbar from '../components/Navbar'
+import { useEffect, useState } from "react";
+import { setPageTitle } from "../utils.jsx";
+import Input from "../components/Input.jsx";
+import Button from "../components/Button.jsx";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function SignUp() {
-    const [newUser, setNewUser]=useState({
-        name:"",
-        email:"",
-        mobile:"",
-        city:"",
-        country:"",
-        password:""
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    city: "",
+    country: "",
+    password: "",
+  });
 
-    })
-    useEffect(()=>{
-        setPageTitle("SignUp-TinyTour")
-    },[])
+  useEffect(() => {
+    setPageTitle("SignUp-TinyTour");
+  }, []);
 
-    const createUser=async()=>{
-        const response=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/signUp`,newUser);
-        console.log(response.data);
-        if(response.data.success){
-            toast.success(response.data.message,{id:"signupSuccess"})
-            setNewUser({
-              name:"",
-              email:"",
-              mobile:"",
-              city:"",
-              country:"",
-              password:""
-            })
+  const createUser = async (e) => {
+    e.preventDefault();
 
-            setTimeout(()=>{
-                window.location.href="/login"
-            },1500)
-        }else{
-            toast.error(response.data.message,{id:"signuperror"})
-        }
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/signUp`,
+        newUser
+      );
+
+      if (response.data.success) {
+        toast.success(response.data.message, { id: "signupSuccess" });
+
+        setNewUser({
+          name: "",
+          email: "",
+          mobile: "",
+          city: "",
+          country: "",
+          password: "",
+        });
+
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1500);
+      } else {
+        toast.error(response.data.message, { id: "signuperror" });
+      }
+    } catch (error) {
+      toast.error("Server not responding " + error.message);
     }
+  };
 
   return (
-    <> <Navbar />
-    <div className="w-60 flex flex-col justify-center items-center m-auto gap-4 ">
-       
-        <h1 className="mt-20 text-xl  text-center" >Sign Up</h1>
-        <Input 
-        type="text"
-        placeholder="Name"
-        value={newUser.name}
-        autoComplete="off"
-        onChange={(e)=>{setNewUser({...newUser,name:e.target.value})}}
-        />
+    <>
+    <>
+  <Navbar />
 
-        <Input 
-        type="email"
-        placeholder="Email"
-        value={newUser.email}
-        autoComplete="off"
-        onChange={(e)=>{setNewUser({...newUser,email:e.target.value})}}
-        />
+  <h1 className="mt-20 text-3xl font-bold text-center text-gray-800">
+    Sign Up
+  </h1>
 
-        <Input 
-        type="text"
-        placeholder="mobile"
-        value={newUser.mobile}
-        onChange={(e)=>{setNewUser({...newUser,mobile:e.target.value})}}
-        />
+  <form
+    onSubmit={createUser}
+    className="w-full max-w-md mx-auto mt-6 bg-white shadow-xl p-6 rounded-xl flex flex-col gap-4 border"
+  >
+    <Input
+      type="text"
+      placeholder="Name"
+      value={newUser.name}
+      onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+      className="w-full"
+    />
 
-        <Input 
-        type="text"
-        placeholder="city"
-        value={newUser.city}
-        onChange={(e)=>{setNewUser({...newUser,city:e.target.value})}}
-        />
+    <Input
+      type="email"
+      placeholder="Email"
+      value={newUser.email}
+      onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+      className="w-full"
+    />
 
-        <Input 
-        type="text"
-        placeholder="country"
-        value={newUser.country}
-        onChange={(e)=>{setNewUser({...newUser,country:e.target.value})}}
-        />
+    <Input
+      type="text"
+      placeholder="Mobile"
+      value={newUser.mobile}
+      onChange={(e) => setNewUser({ ...newUser, mobile: e.target.value })}
+      className="w-full"
+    />
 
-        <Input 
-        type="password"
-        placeholder="password"
-        autoComplete="new-password"
-        value={newUser.password}
-        onChange={(e)=>{setNewUser({...newUser,password:e.target.value})}}
-        />
+    <Input
+      type="text"
+      placeholder="City"
+      value={newUser.city}
+      onChange={(e) => setNewUser({ ...newUser, city: e.target.value })}
+      className="w-full"
+    />
+    <Input
+      type="text"
+      placeholder="Country"
+      value={newUser.country}
+      onChange={(e) => setNewUser({ ...newUser, country: e.target.value })}
+      className="w-full"
+    />
 
-        <Button title="signUp" onClick={createUser}/>
-        <Link to="/login" className="text-blue-500">Already have an account? Login</Link>
+    <Input
+      type="password"
+      placeholder="Password"
+      autoComplete="new-password"
+      value={newUser.password}
+      onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+      className="w-full"
+    />
 
-       <Toaster/>
-    </div>
+    <Button title="Sign Up" type="submit" varient="primary" />
+
+    <Link to="/login" className="text-blue-600 text-sm text-center hover:underline">
+      Already have an account? Login
+    </Link>
+
+    <Toaster />
+  </form>
+</>
     </>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;
