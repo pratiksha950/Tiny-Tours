@@ -9,6 +9,7 @@ import toast,{Toaster} from "react-hot-toast";
 import {getUserJwtToken} from "../utils.jsx"
 import { useNavigate } from "react-router-dom";
 import PhotoViewer from "../components/PhotoViewer.jsx";
+import img from "../assets/tour.png"
 
 import {
     ImageKitAbortError,
@@ -102,7 +103,7 @@ function NewTour() {
                 signature,
                 publicKey,
                 file,
-                fileName: file.name, // Optionally set a custom file name
+                fileName: file.name, 
                 // Progress callback to update upload progress state
                 onProgress: (event) => {
                     setProgress((event.loaded / event.total) * 100);
@@ -142,117 +143,112 @@ function NewTour() {
     Add New Tour
   </h1>
 
-  <div className="max-w-2xl mx-auto mt-10 bg-white shadow-xl p-6 rounded-xl border">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+  <div className="max-w-6xl w-full bg-white shadow-xl rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 h-[500px]">
 
-    <Input
-      type={"text"}
-      placeholder={"Enter Title"}
-      value={newTour.title}
-      onChange={(e) => {
-        setNewTour({
-          ...newTour,
-          title: e.target.value,
-        });
-      }}
-      className="mb-4"
-    />
-
-    <Input
-      type={"text"}
-      placeholder={"Enter Description"}
-      value={newTour.Description}
-      onChange={(e) => {
-        setNewTour({
-          ...newTour,
-          Description: e.target.value,
-        });
-      }}
-      className="mb-4"
-    />
-
-    <MultiSelect
-      selectedItems={newTour.cities}
-      placeholder={"Enter city"}
-      onAddItem={(val) => {
-        setNewTour({
-          ...newTour,
-          cities: [...newTour.cities, val],
-        });
-      }}
-      onRemoveItem={(val) => {
-        setNewTour({
-          ...newTour,
-          cities: newTour.cities.filter((city) => city !== val),
-        });
-      }}
-      className="mb-4"
-    />
-
-    <Input
-      type={"date"}
-      placeholder={"Enter startDate"}
-      value={newTour.startDate}
-      onChange={(e) => {
-        setNewTour({
-          ...newTour,
-          startDate: e.target.value,
-        });
-      }}
-      className="mb-4"
-    />
-
-    <Input
-      type={"date"}
-      placeholder={"Enter endDate"}
-      value={newTour.endDate}
-      onChange={(e) => {
-        setNewTour({
-          ...newTour,
-          endDate: e.target.value,
-        });
-      }}
-      className="mb-4"
-    />
-
-    <div className="flex gap-3 flex-wrap mb-4">
-      {newTour.photos?.map((photo, index) => (
-        <PhotoViewer
-          key={index}
-          imgUrl={photo}
-          index={index}
-          showDelete
-          onDelete={(deleteIndex) => {
-            setNewTour((prev) => ({
-              ...prev,
-              photos: prev.photos.filter((_, i) => i !== deleteIndex),
-            }));
-          }}
-        />
-      ))}
+    <div className="hidden md:block">
+      <img
+        src={img}
+        alt="Tour"
+        className="w-full h-full object-cover"
+      />
     </div>
 
-    <input
-      type="file"
-      ref={fileInputRef}
-      onChange={(e) => {
-        if (e.target.files.length > 0) {
-          handleUpload();
-        }
-      }}
-      className="block w-full border border-gray-300 p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-    />
+    <div className="p-8">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+        Add New Tour
+      </h1>
 
-    {progress > 0 && (
-      <p className="mt-2 text-sm text-blue-600 font-semibold">
-        Uploading {progress.toFixed(0)}%
-      </p>
-    )}
+      <div className="space-y-4">
+
+        <Input
+          type="text"
+          placeholder="Enter Title"
+          value={newTour.title}
+          onChange={(e) =>
+            setNewTour({ ...newTour, title: e.target.value })
+          }
+        />
+
+        <Input
+          type="text"
+          placeholder="Enter Description"
+          value={newTour.Description}
+          onChange={(e) =>
+            setNewTour({ ...newTour, Description: e.target.value })
+          }
+        />
+
+        <MultiSelect
+          selectedItems={newTour.cities}
+          placeholder="Enter city"
+          onAddItem={(val) =>
+            setNewTour({ ...newTour, cities: [...newTour.cities, val] })
+          }
+          onRemoveItem={(val) =>
+            setNewTour({
+              ...newTour,
+              cities: newTour.cities.filter((c) => c !== val),
+            })
+          }
+        />
+
+        <div className="grid grid-cols-2 gap-3">
+          <Input
+            type="date"
+            value={newTour.startDate}
+            onChange={(e) =>
+              setNewTour({ ...newTour, startDate: e.target.value })
+            }
+          />
+          <Input
+            type="date"
+            value={newTour.endDate}
+            onChange={(e) =>
+              setNewTour({ ...newTour, endDate: e.target.value })
+            }
+          />
+        </div>
+
+        {/* Uploaded Photos Preview */}
+        <div className="flex gap-3 flex-wrap">
+          {newTour.photos?.map((photo, index) => (
+            <PhotoViewer
+              key={index}
+              imgUrl={photo}
+              index={index}
+              showDelete
+              onDelete={(i) =>
+                setNewTour((prev) => ({
+                  ...prev,
+                  photos: prev.photos.filter((_, idx) => idx !== i),
+                }))
+              }
+            />
+          ))}
+        </div>
+
+        {/* File Upload */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleUpload}
+          className="w-full border p-2 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer"
+        />
+
+        {progress > 0 && (
+          <p className="text-blue-600 font-semibold">
+            Uploading {progress.toFixed(0)}%
+          </p>
+        )}
+
+        <Button title="Add Tour" onClick={addTour} varient="primary" />
+      </div>
+    </div>
   </div>
 
-  <div className="max-w-2xl mx-auto mt-6 text-center">
-    <Button title="Add Tour" onClick={addTour} varient="primary" />
-  </div>
-
+  <Toaster />
+</div>
   <Toaster />
 </div>
       </>
