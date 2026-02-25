@@ -6,10 +6,11 @@ import { getUserJwtToken } from '../utils';
 import newTour from "../assets/new-tour.png"
 import {Link} from "react-router-dom"
 import TourCard from '../components/TourCard';
-
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
     const [tours,setTours]=useState([]);
+    const navigate = useNavigate();
 
     const userJwt=getUserJwtToken();
 
@@ -26,9 +27,17 @@ function Dashboard() {
             toast.error(response.data.message)
         }
     }
-        useEffect(()=>{
-            loadTours();
-        },[])
+      useEffect(() => {
+  const token = getUserJwtToken();
+
+  if (!token) {
+    toast.error("Please login first!");
+    navigate("/login");
+    return;
+  }
+
+  loadTours();
+}, []);
 
   return (
     <div>

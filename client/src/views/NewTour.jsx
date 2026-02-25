@@ -74,9 +74,12 @@ function NewTour() {
       }
     }
 
-    useEffect(()=>{
-        setPageTitle("NewTour-TinyTour")
-    },[])
+useEffect(() => {
+  if (!getUserJwtToken()) {
+    toast.error("Please login first!");
+    navigate("/login");
+  }
+}, []);
 
          const handleUpload = async () => {
         const fileInput = fileInputRef.current;
