@@ -102,5 +102,56 @@ const GetTourById=async(req,res)=>{
     })
 
 }
+const deleteTour = async (req, res) => {
+
+  try {
+
+    const user = req.user;
+    const userId = user.id;
+
+    const { id } = req.params;
+
+    const tour = await Tour.findById(id);
+
+    if (!tour) {
+
+      return res.status(404).json({
+        success: false,
+        message: "Tour not found",
+        data: null
+      });
+
+    }
+
+    // 🔐 Only owner can delete
+    if (tour.user.toString() !== userId) {
+
+      return res.json({
+        success: false,
+        message: "Unauthorized to delete this tour",
+        data: null
+      });
+
+    }
+
+    await Tour.findByIdAndDelete(id);
+
+    return res.json({
+      success: true,
+      message: "Tour deleted successfully",
+      data: null
+    });
+
+  } catch (error) {
+
+    return res.json({
+      success: false,
+      message: "Delete failed",
+      data: null
+    });
+
+  }
+
+};
     
-export {getTours,postTour,putTours,GetTourById}
+export {getTours,postTour,putTours,GetTourById,deleteTour}

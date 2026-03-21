@@ -5,6 +5,7 @@ import connectDB from "./db.js";
 import ImageKit from "@imagekit/nodejs";
 
 
+
 dotenv.config();
 
 //Routes
@@ -13,7 +14,7 @@ import {getHome,getHealth} from "./controllers/health.js"
 //auth/js
 import {postSignUp,postLogin} from "./controllers/auth.js"
 //tour.js
-import {getTours,postTour,putTours,GetTourById} from "./controllers/tours.js"
+import {getTours,postTour,putTours,GetTourById,deleteTour} from "./controllers/tours.js"
 
 //Middleware
 import {checkJWT} from "./middlewares/jwt.js"
@@ -66,7 +67,8 @@ app.get("/tours/:id",checkJWT,GetTourById)
 app.post("/tours",checkJWT,getTours)
 app.get("/tours",checkJWT,postTour)
 
-
+// 🗑️ DELETE ROUTE (NEW)
+app.delete("/tours/:id", checkJWT, deleteTour);
 
 app.listen(PORT,()=>{
     console.log(`server is running on port ${PORT}`);

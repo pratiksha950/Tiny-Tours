@@ -1,58 +1,153 @@
-import React from 'react'
-import {Building2} from "lucide-react"
-import Avatar from './Avatar';
-import PhotoViewer from './PhotoViewer';
-import { Footprints ,LandPlot} from 'lucide-react';
-import {Pencil} from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { getUserJwtToken } from "../utils";
 
-function TourCard({_id,title,Description,cities,user,photos,startDate,endDate}) {
-  const {name,email}=user;
+function TourCard({
+  _id,
+  title,
+  Description,
+  cities,
+  startDate,
+  endDate,
+  photos = [],
+  onDeleteSuccess,
+}) {
+
+  const deleteTour = async () => {
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this tour?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+
+      const res = await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/tours/${_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${getUserJwtToken()}`,
+          },
+        }
+      );
+
+      if (res.data.success) {
+
+        toast.success("Tour deleted successfully");
+
+        if (onDeleteSuccess) {
+          onDeleteSuccess(_id);
+        }
+
+      } else {
+
+        toast.error(res.data.message);
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+      toast.error("Delete failed");
+
+    }
+
+  };
+
   return (
-<div className="relative w-2/3 mx-auto my-6 rounded-xl border border-gray-200 bg-white p-5 shadow-md transition hover:shadow-xl">
-  
-  <h1 className="text-lg font-semibold text-gray-800 mb-2">
-    {title}
-  </h1>
 
-  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-    {Description}
-  </p>
+    <div className="bg-white shadow-lg rounded-xl p-4 mb-6">
 
-  <div className="flex items-center flex-wrap gap-2 text-sm text-gray-700">
-    <Building2 className="w-4 h-4 text-gray-500" />
+      <div className="flex justify-between items-center">
 
-    {cities.map((city) => (
-      <span
-        key={city}
-        className="rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-700"
-      >
-        {city}
-      </span>
-      
-    ))}
-    <div className='ml-4 flex items-center gap-2 text-gray-600 py-5 px-3'>
-    <Footprints />Started on: {new Date(startDate).toLocaleDateString("en-IN")} &nbsp; &nbsp;
-    <LandPlot />Ends on: {new Date(endDate).toLocaleDateString("en-IN")}
-</div>
-  </div>
+        <h2 className="text-xl font-bold">
+          {title}
+        </h2>
 
-  <div className='flex items-center'>
-    <span className='mr-2'>Posted by:</span>
-    <Avatar name={name} size={"small"}/>
-     <strong className='ml-2'>{name} </strong> ({email})
-  </div>
-
-<div className="mt-4 flex flex-wrap gap-2">
-        {photos?.map((photo, index) => (
-          <PhotoViewer key={index} imgUrl={photo} index={index} />
-        ))}
-      </div>
-      <Link to={`/tours/${_id}/edit`}>
-      <Pencil className='absolute top-2 right-2 h-6 w-6 mt-2 cursor-pointer'/></Link>
+        <button
+          onClick={deleteTour}
+          className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
+        >
+          🗑️ Delete
+        </button>
 
       </div>
-  )
+
+      <p className="text-gray-600 mt-2 mb-2">
+        {Description}
+      </p>
+
+      <p className="text-sm text-gray-500 mb-2">
+        Cities: {cities?.join(", ")}
+      </p>
+
+      <p className="text-sm text-gray-500 mb-3">
+        {startDate} → {endDate}
+      </p>
+
+      <div className="flex gap-3 flex-wrap">
+
+        {photos && photos.length > 0 ? (
+
+          photos.map((file, index) => {
+
+            const isImage =
+              file.includes(".jpg") ||
+              file.includes(".jpeg") ||
+              file.includes(".png") ||
+              file.includes(".gif") ||
+              file.includes("imagekit");
+
+            return (
+
+              <div key={index}>
+
+                {isImage ? (
+
+                  <img
+                    src={file}
+                    alt="tour"
+                    className="w-40 h-28 object-cover rounded-lg shadow"
+                    onError={(e) => {
+                      e.target.style.display = "none";
+                    }}
+                  />
+
+                ) : (
+
+                  <a
+                    href={file}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block bg-blue-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-600"
+                  >
+                    📄 Open File
+                  </a>
+
+                )}
+
+              </div>
+
+            );
+
+          })
+
+        ) : (
+
+          <p className="text-gray-400">
+            No files uploaded
+          </p>
+
+        )}
+
+      </div>
+
+    </div>
+
+  );
+
 }
 
-export default TourCard
+export default TourCard;

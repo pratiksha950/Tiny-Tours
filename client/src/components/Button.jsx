@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Button({title,size="sm",varient="danger",onClick}) {
+function Button({title,size="sm",varient="primary",onClick}) {
  const size_classes = {
     sm: "px-3 py-1 text-sm",
     md: "px-6 py-2 text-base",
